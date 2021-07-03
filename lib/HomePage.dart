@@ -38,8 +38,7 @@ class HomePage extends StatelessWidget {
                         fontFamily: 'avenir',
                         fontSize: 32,
                         fontWeight: FontWeight.w900),
-                  ),
-                ),
+                  ),),
                 IconButton(
                     icon: Icon(Icons.view_list_rounded), onPressed: () {}),
                 IconButton(icon: Icon(Icons.grid_view), onPressed: () {}),
@@ -48,8 +47,19 @@ class HomePage extends StatelessWidget {
           ),
           Expanded(
             child: Obx(() {
-              if (productController.isLoading.value)
+              if(!productController.isNetWorkAvailable.value){
+                return Text('Please check your internet connection!');}
+             else if (productController.isLoading.value)
                 return Center(child: CircularProgressIndicator());
+              else if (productController.error.value.isNotEmpty){
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(productController.error.toString()),
+                    IconButton(icon: Icon(Icons.refresh_rounded),
+              onPressed: () {productController.fetchProducts();
+              }, iconSize: 50),],);
+              }
               else
                 return StaggeredGridView.countBuilder(
                   crossAxisCount: 2,
@@ -57,8 +67,7 @@ class HomePage extends StatelessWidget {
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                   itemBuilder: (context, index) {
-                    return ProductTile(productController.productList[index]);
-                  },
+                    return ProductTile(productController.productList[index]);},
                   staggeredTileBuilder: (index) => StaggeredTile.fit(1),
                 );
             }),

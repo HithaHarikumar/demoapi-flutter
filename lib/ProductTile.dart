@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class ProductTile extends StatelessWidget {
+
   final Images images;
   const ProductTile(this.images);
 
   @override
   Widget build(BuildContext context) {
+    var url = images.urls!.full;
     return Card(
       elevation: 2,
       child: Padding(
@@ -26,10 +28,10 @@ class ProductTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  // child: Image.network(
-                  //   images.color!,
-                  //   fit: BoxFit.cover,
-                  // ),
+                  child: Image.network(
+                    url!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 // Positioned(
                 //   right: 0,
@@ -38,16 +40,16 @@ class ProductTile extends StatelessWidget {
                 //     child:
                 //
                 //
-                //     // IconButton(
-                //     //   icon: images.height!
-                //     //       ? Icon(Icons.favorite_rounded)
-                //     //       : Icon(Icons.favorite_border),
-                //     //   onPressed: () {
-                //     //     images.isFavorite.toggle();
-                //     //   },
-                //     // ),
+                //     IconButton(
+                //       icon: images.height!
+                //           ? Icon(Icons.favorite_rounded)
+                //           : Icon(Icons.favorite_border),
+                //       onPressed: () {
+                //         images.isFavorite.toggle();
+                //       },
+                //     ),
                 //   )),
-                // )
+                // ),
               ],
             ),
             SizedBox(height: 8),
