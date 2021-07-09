@@ -1,7 +1,9 @@
 import 'package:demolistapi/HomePage.dart';
+import 'package:demolistapi/services/getit.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  serviceLocators();
   runApp(MyApp());
 }
 

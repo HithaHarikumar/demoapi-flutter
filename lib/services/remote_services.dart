@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:demolistapi/exception/httpexception.dart';
 import 'package:dio/dio.dart';
-import 'product.dart';
+import '../product.dart';
 
 
 class DioServices {

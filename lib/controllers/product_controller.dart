@@ -1,11 +1,8 @@
-
-
 import 'dart:async';
-
 import 'package:connectivity/connectivity.dart';
-import 'package:demolistapi/remote_services.dart';
+import 'package:demolistapi/services/getit.dart';
+import 'package:demolistapi/services/remote_services.dart';
 import 'package:get/get.dart';
-
 import '../product.dart';
 
 class ProductController extends GetxController {
@@ -14,21 +11,27 @@ class ProductController extends GetxController {
   RxString url = 'photos'.obs;
   RxString error = "" .obs;
   RxBool isNetWorkAvailable = true.obs;
-  DioServices dioServices = DioServices();
+  DioServices dioServices = locator<DioServices>();
   StreamSubscription? sub;
 
-
   @override
-  void onInit() {
-    error.value = "";
+  Future<void> onInit() async {
+    // error.value = "";
     sub = Connectivity().onConnectivityChanged.listen((result) {
       isNetWorkAvailable(result != ConnectivityResult.none);
     });
 
+    final connectivityResult = await Connectivity().checkConnectivity();
+    print(connectivityResult );
+    if(connectivityResult == ConnectivityResult.none){
+      print('No internet Connection');
+      error.value = "No internet Connection";
+      return null;
+    }
+
     fetchProducts();
     super.onInit();
   }
-
 
   @override
     void dispose() {
@@ -38,6 +41,7 @@ class ProductController extends GetxController {
 
   void fetchProducts() async {
     try {
+      error.value ='';
       isLoading(true);
       List products = await dioServices.getAPI(url.toString());
 
